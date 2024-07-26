@@ -5,6 +5,14 @@ import { usePathname } from "next/navigation";
 import { Navigations } from "@/utils/mockData";
 import { Button, ButtonGroup } from "@chakra-ui/react";
 import { IoChevronDown } from "react-icons/io5";
+import {
+  SignedIn,
+  SignedOut,
+  SignIn,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs";
 
 const NavBar = () => {
   const pathname = usePathname();
@@ -52,7 +60,7 @@ const NavBar = () => {
         ))}
       </ul>
       <ButtonGroup gap="4">
-        <Link href="/sign-in">
+        <SignedOut>
           <Button
             size="sm"
             variant="solid"
@@ -65,11 +73,8 @@ const NavBar = () => {
               padding: "10px 20px",
             }}
           >
-            Sign In
+            <SignInButton>Sign In</SignInButton>
           </Button>
-        </Link>
-        <Link href="/sign-up">
-          {" "}
           <Button
             size="sm"
             variant="solid"
@@ -81,9 +86,23 @@ const NavBar = () => {
               fontWeight: "normal",
             }}
           >
-            Clinic Sign Up
-          </Button>{" "}
+            <SignUpButton>Clinic Sign Up</SignUpButton>
+          </Button>
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+        {/* <Link href="/sign-in">
+          
+            
+          </Button>
         </Link>
+        <Link href="/sign-up">
+          {" "}
+          
+            
+          </Button>{" "}
+        </Link> */}
       </ButtonGroup>
     </nav>
   );

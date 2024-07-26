@@ -21,7 +21,6 @@ import {
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
-  SliderMark,
 } from "@chakra-ui/react";
 import { FaCircle } from "react-icons/fa";
 
