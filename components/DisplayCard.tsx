@@ -2,6 +2,7 @@ import { Flex } from "@chakra-ui/react";
 import DoctorCard from "./DoctorCard";
 import Map from "./Map";
 import Filter from "./Filter";
+
 const DisplayCard = () => {
   return (
     <Flex justify="start" gap={5} width="100%" height="auto">

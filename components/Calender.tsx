@@ -17,21 +17,25 @@ interface CalendarProps {
   data: CalendarData;
 }
 
-const Calender = ({ data }: CalendarProps) => {
+const Calendar = ({ data }: CalendarProps) => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [showTime, setShowTime] = useState<boolean>(false);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
   const handleDateClick = (date: string) => {
     setSelectedDate(date);
+    setShowTime((prevSelected) => !prevSelected);
   };
 
   const handleTimeClick = (time: string) => {
-    setSelectedDate(time);
+    setSelectedTime(time);
   };
 
   return (
     <Flex alignItems="start" justifyContent="space-between" width="100%">
-      <TiChevronLeft style={{ fontSize: "30px", cursor: "pointer" }} />
+      <TiChevronLeft
+        style={{ fontSize: "30px", cursor: "pointer", marginTop: "20px" }}
+      />
       <Flex
         width="100%"
         height="auto"
@@ -39,35 +43,33 @@ const Calender = ({ data }: CalendarProps) => {
         justify="space-around"
         overflowX="auto"
       >
-        {data.days.map((data) => (
+        {data.days.map((dayData) => (
           <Flex
-            key={data.date}
+            key={dayData.date}
             direction="column"
             align="center"
             justify="start"
-            height="auto"
+            height={showTime ? 300 : 100}
             width="100%"
             gap={5}
             paddingLeft={5}
-            borderColor="#eee"
+            borderColor="#333"
+            borderX="1px solid"
           >
-            <Flex
-              align="center"
-              justify="start"
-              width="100%"
-              borderRight="1px solid"
-            >
+            <Flex align="center" justify="start" width="100%">
               <Button
                 variant="default"
                 border="1px solid"
-                borderColor={selectedDate === data.date ? "#9986F8" : "#eee"}
+                borderColor={selectedDate === dayData.date ? "#9986F8" : "#eee"}
                 rounded={20}
-                onClick={() => handleDateClick(data.date)}
-                bg={selectedDate === data.date ? "#F2F1FE" : "#fff"}
+                onClick={() => handleDateClick(dayData.date)}
+                bg={selectedDate === dayData.date ? "#F2F1FE" : "#fff"}
                 width="80px"
                 height="80px"
                 marginRight={5}
-                disabled={data.day === "Saturday" || data.day === "Sunday"}
+                disabled={
+                  dayData.day === "Saturday" || dayData.day === "Sunday"
+                }
                 padding={0}
               >
                 <Flex align="center" justify="center" gap={5} width="100%">
@@ -79,30 +81,29 @@ const Calender = ({ data }: CalendarProps) => {
                   >
                     <Text
                       fontWeight={
-                        selectedDate === data.date ? "semibold" : "normal"
+                        selectedDate === dayData.date ? "semibold" : "normal"
                       }
                       fontSize="13px"
                       textTransform="uppercase"
                     >
-                      {data.day}
+                      {dayData.day}
                     </Text>
                     <Text
                       fontWeight={
-                        selectedDate === data.date ? "semibold" : "normal"
+                        selectedDate === dayData.date ? "semibold" : "normal"
                       }
                       fontSize="13px"
                     >
-                      {data.date}
+                      {dayData.date}
                     </Text>
                   </Flex>
                 </Flex>
               </Button>
             </Flex>
-
-            <Flex align="center" gap={3} width="100%">
-              {selectedDate === data.date && (
+            {showTime && (
+              <Flex align="center" gap={3} width="100%">
                 <Box width="100%">
-                  {data.times.map((time) => (
+                  {dayData.times.map((time) => (
                     <Flex
                       key={time}
                       direction="column"
@@ -111,32 +112,50 @@ const Calender = ({ data }: CalendarProps) => {
                       gap={5}
                       width="100%"
                     >
-                      <Button
-                        variant="default"
-                        border="1px solid"
-                        borderColor={selectedDate === time ? "#9986F8" : "#eee"}
-                        rounded={10}
-                        onClick={() => handleTimeClick(time)}
-                        bg={selectedDate === time ? "#F2F1FE" : "#fff"}
-                        width="70px"
-                        height="30px"
-                        padding={0}
-                        marginBottom={3}
-                      >
-                        <Text fontWeight="normal" fontSize="13px">
-                          {time}
-                        </Text>
-                      </Button>
+                      {time !== "" && (
+                        <Button
+                          variant="default"
+                          border={
+                            time === "See More" || time === "See Less"
+                              ? 0
+                              : "1px solid"
+                          }
+                          borderColor={
+                            selectedTime === time ? "#9986F8" : "#eee"
+                          }
+                          rounded={
+                            time === "See More" || time === "See Less" ? 0 : 10
+                          }
+                          onClick={() => handleTimeClick(time)}
+                          bg={selectedTime === time ? "#F2F1FE" : "#fff"}
+                          width="70px"
+                          height="30px"
+                          padding={0}
+                          marginBottom={3}
+                          textDecoration={
+                            time === "See More" || time === "See Less"
+                              ? "underline"
+                              : ""
+                          }
+                        >
+                          <Text fontWeight="normal" fontSize="13px">
+                            {time}
+                          </Text>
+                        </Button>
+                      )}
                     </Flex>
                   ))}
                 </Box>
-              )}
-            </Flex>
+              </Flex>
+            )}
           </Flex>
         ))}
       </Flex>
-      <TiChevronRight style={{ fontSize: "30px", cursor: "pointer" }} />
+      <TiChevronRight
+        style={{ fontSize: "30px", cursor: "pointer", marginTop: "20px" }}
+      />
     </Flex>
   );
 };
-export default Calender;
+
+export default Calendar;

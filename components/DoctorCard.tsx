@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import Calender from "./Calender";
 import Image from "next/image";
@@ -8,6 +8,9 @@ import { ImNotification } from "react-icons/im";
 import { SlCalender } from "react-icons/sl";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa6";
+import { CiHeart } from "react-icons/ci";
+import { FaHeart } from "react-icons/fa";
+import { Badge } from "@chakra-ui/react";
 
 interface CalendarData {
   days: DayData[];
@@ -23,28 +26,45 @@ const DoctorCard = () => {
   const calendarData: CalendarData = {
     days: [
       { day: "Mon", date: "9", times: ["8:00 AM"] },
-      { day: "Tue", date: "10", times: ["8:00 AM", "9:00 AM", "9:30 AM"] },
+      {
+        day: "Tue",
+        date: "10",
+        times: ["8:00 AM", "9:00 AM", "9:30 AM", "See Less"],
+      },
       {
         day: "Wed",
         date: "11",
-        times: ["8:00 AM", "8:20 AM", "9:00 AM", "see more"],
+        times: ["8:00 AM", "8:20 AM", "9:00 AM", "See More"],
       },
       { day: "Thu", date: "12", times: ["8:00 AM", "9:00 AM"] },
       { day: "Fri", date: "13", times: ["8:00 AM", "9:00 AM"] },
       { day: "Sat", date: "14", times: [""] },
       { day: "Sun", date: "15", times: [""] },
       { day: "Mon", date: "16", times: ["8:00 AM"] },
-      { day: "Tue", date: "17", times: ["8:00 AM", "9:00 AM", "9:30 AM"] },
+      {
+        day: "Tue",
+        date: "17",
+        times: ["8:00 AM", "9:00 AM", "9:30 AM", "-", "See Less"],
+      },
       {
         day: "Wed",
         date: "18",
-        times: ["8:00 AM", "8:20 AM", "9:00 AM", "see more"],
+        times: ["8:00 AM", "8:20 AM", "9:00 AM", "See More"],
       },
       { day: "Thu", date: "19", times: ["8:00 AM", "9:00 AM"] },
       { day: "Fri", date: "20", times: ["8:00 AM", "9:00 AM"] },
       { day: "Sat", date: "21", times: [""] },
       { day: "Sun", date: "22", times: [""] },
     ],
+  };
+
+  const initialLoveState: boolean[] = Doctor.map((_, index) => index === 1);
+  const [love, setLove] = useState<boolean[]>(initialLoveState);
+
+  const handleLikeDoctor = (index: number) => {
+    setLove((prevLove) =>
+      prevLove.map((item, i) => (i === index ? !item : item))
+    );
   };
 
   return (
@@ -123,6 +143,9 @@ const DoctorCard = () => {
                     overflow="hidden"
                     border="1px solid"
                     borderColor="#eee"
+                    position="relative"
+                    cursor="pointer"
+                    onClick={() => handleLikeDoctor(i)}
                   >
                     <Image
                       src={data.image}
@@ -131,6 +154,28 @@ const DoctorCard = () => {
                       alt="doctor"
                       style={{ objectFit: "cover" }}
                     />
+
+                    <Button
+                      variant="default"
+                      size="sm"
+                      width={5}
+                      height={8}
+                      rounded={50}
+                      background="#fff"
+                      position="absolute"
+                      top={1}
+                      left={1}
+                    >
+                      <Flex align="center" justify="center">
+                        {love[i] === true ? (
+                          <FaHeart style={{ color: "red", fontSize: "15px" }} />
+                        ) : (
+                          <CiHeart
+                            style={{ color: "#777", fontSize: "15px" }}
+                          />
+                        )}
+                      </Flex>
+                    </Button>
                   </Box>
                   <Flex
                     direction="column"
@@ -155,22 +200,24 @@ const DoctorCard = () => {
                       </Text>
                     </Flex>
                     <Flex align="center" gap={2}>
-                      <Flex
-                        gap={1}
-                        align="center"
-                        background="#FED7AA"
-                        paddingX={1}
-                        paddingY={0.2}
-                        rounded={5}
-                      >
-                        <FaStar
-                          style={{ color: "#F97316", fontSize: "12px" }}
-                        />
-                        <Text color="#F97316" fontSize={12}>
-                          {" "}
-                          5.00{" "}
-                        </Text>
-                      </Flex>
+                      <Badge colorScheme="#F97316">
+                        <Flex
+                          gap={1}
+                          align="center"
+                          background="#FED7AA"
+                          paddingX={1}
+                          paddingY={0.2}
+                          rounded={5}
+                        >
+                          <FaStar
+                            style={{ color: "#F97316", fontSize: "12px" }}
+                          />
+                          <Text color="#F97316" fontSize={12}>
+                            {" "}
+                            5.00{" "}
+                          </Text>
+                        </Flex>
+                      </Badge>
                       <Text
                         color="#6B7280"
                         fontSize={12}
@@ -180,13 +227,53 @@ const DoctorCard = () => {
                       </Text>
                     </Flex>
                     <Flex align="center" gap={2}>
-                      <Flex>
+                      <Flex
+                        width={10}
+                        height={15}
+                        position="relative"
+                        marginRight={2}
+                      >
                         <Image
                           src={`https://play-lh.googleusercontent.com/Fro4e_osoDhhrjgiZ_Y2C5FNXBMWvrb4rGpmkM1PDAcUPXeiAlPCq7NeaT4Q6NRUxRqo`}
-                          height={15}
-                          width={15}
+                          height={20}
+                          width={20}
                           alt="item"
-                          style={{ borderRadius: "50%" }}
+                          style={{
+                            borderRadius: "50%",
+                            border: "1px solid #eee",
+                            position: "absolute",
+                            left: "0",
+                            top: "0",
+                            transform: "translate-x-(-50%)",
+                          }}
+                        />
+                        <Image
+                          src={`https://play-lh.googleusercontent.com/Fro4e_osoDhhrjgiZ_Y2C5FNXBMWvrb4rGpmkM1PDAcUPXeiAlPCq7NeaT4Q6NRUxRqo`}
+                          height={20}
+                          width={20}
+                          alt="item"
+                          style={{
+                            borderRadius: "50%",
+                            border: "1px solid #eee",
+                            position: "absolute",
+                            left: "30%",
+                            top: "0",
+                            transform: "translate-x-(-50%)",
+                          }}
+                        />
+                        <Image
+                          src={`https://play-lh.googleusercontent.com/Fro4e_osoDhhrjgiZ_Y2C5FNXBMWvrb4rGpmkM1PDAcUPXeiAlPCq7NeaT4Q6NRUxRqo`}
+                          height={20}
+                          width={20}
+                          alt="item"
+                          style={{
+                            borderRadius: "50%",
+                            border: "1px solid #eee",
+                            position: "absolute",
+                            left: "70%",
+                            top: "0",
+                            transform: "translate-x-(-50%)",
+                          }}
                         />
                       </Flex>
                       <Text color="#000" fontSize={12}>

@@ -16,9 +16,31 @@ import {
   SpecialtyOptions,
   LanguageOptions,
 } from "@/utils/mockData";
+import {
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderMark,
+} from "@chakra-ui/react";
+import { FaCircle } from "react-icons/fa";
 
 const Filter = () => {
   const [value, setValue] = useState<string>("no-preference");
+
+  const [sliderValue, setSliderValue] = useState(70);
+
+  const handleSliderChange = (value: any) => {
+    setSliderValue(value);
+  };
+
+  const getSegment = (value: any) => {
+    if (value < 20) return 1;
+    if (value < 40) return 2;
+    if (value < 60) return 3;
+    if (value < 80) return 4;
+    return 5;
+  };
 
   const customStyles = {
     control: (provided: any, state: any) => ({
@@ -157,6 +179,56 @@ const Filter = () => {
           {" "}
           Rating / Review{" "}
         </Text>
+        <Flex align="center" gap={2}>
+          <Flex
+            align="center"
+            justify="center"
+            paddingX={3}
+            paddingY={2}
+            rounded={10}
+            borderColor="#eee"
+            border="1px solid"
+          >
+            1
+          </Flex>
+          <Slider
+            aria-label="slider-ex-4"
+            value={sliderValue}
+            onChange={handleSliderChange}
+            step={1}
+            min={0}
+            max={100}
+          >
+            <SliderTrack bg="purple.100">
+              <SliderFilledTrack bg="purple" />
+            </SliderTrack>
+            <SliderThumb boxSize={6}>
+              <Box color="purple" as={FaCircle} />
+            </SliderThumb>
+          </Slider>
+          <Flex
+            align="center"
+            justify="center"
+            paddingX={3}
+            paddingY={2}
+            rounded={10}
+            borderColor="#eee"
+            border="1px solid"
+          >
+            5
+          </Flex>
+          <Flex
+            align="center"
+            justify="center"
+            paddingX={3}
+            paddingY={2}
+            rounded={10}
+            borderColor="#eee"
+            border="1px solid"
+          >
+            <span style={{ color: "red" }}> {getSegment(sliderValue)}+ </span>
+          </Flex>
+        </Flex>
       </Box>
       <Box marginBottom={10}>
         <Text fontSize={15} fontWeight="semibold" marginBottom={5}>
