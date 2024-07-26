@@ -79,3 +79,43 @@ export const LanguageOptions = [
   { value: "deutsch", label: "Deutsch" },
   { value: "french", label: "French" },
 ];
+
+export const Doctor = [
+  {
+    image:
+      "https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?size=626&ext=jpg&ga=GA1.1.582191414.1720378349&semt=sph",
+    name: "Catherine Carroll, DO",
+    appointment: true,
+    book: "Book Again",
+    tagged: true,
+    like: false,
+  },
+  {
+    image:
+      "https://img.freepik.com/free-photo/doctor-with-his-arms-crossed-white-background_1368-5790.jpg?size=626&ext=jpg&ga=GA1.1.582191414.1720378349&semt=sph",
+    name: "Steven Werner, MD",
+    appointment: false,
+    book: "",
+    tagged: false,
+    like: true,
+  },
+
+  {
+    image:
+      "https://img.freepik.com/free-photo/medium-shot-smiley-doctor-with-coat_23-2148814212.jpg?size=626&ext=jpg&ga=GA1.1.582191414.1720378349&semt=sph",
+    name: "Dr Anesa Dahly",
+    appointment: false,
+    book: "Book Appointment",
+    tagged: false,
+    like: false,
+  },
+  {
+    image:
+      "https://img.freepik.com/free-photo/cinematic-portrait-woman-working-healthcare-system-having-care-job_23-2151237523.jpg?ga=GA1.1.582191414.1720378349&semt=sph",
+    name: "Olivia Rhye",
+    appointment: false,
+    book: "",
+    tagged: false,
+    like: false,
+  },
+];
